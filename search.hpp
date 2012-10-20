@@ -1,0 +1,29 @@
+#ifndef __search_hpp__
+#define __search_hpp__
+#include <queue>
+#include <map>
+#include "node.hpp"
+
+extern int W;
+// extern graph g;
+// extern int N;
+
+struct CompareNode
+{
+    bool operator()(const node &a, const node &b) {
+        // if (W*a.h + a.cost == W*b.h + b.cost) {
+        //     return a.h > b.h;
+        // }
+        return W*a.h + a.cost > W*b.h + b.cost;
+    }
+};
+
+typedef priority_queue<node, vector<node>, CompareNode> pqueue;
+
+bool is_better(node& n, map<bool*, int>& distances);
+pair<int, node> WIDAstar(int w);
+pair<int, node> IDAstar();
+pair<int, node> WAstar(int w);
+pair<int, node> Astar();
+
+#endif

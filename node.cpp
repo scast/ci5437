@@ -2,21 +2,20 @@
 #include "clique.hpp"
 #include "cstring"
 
-
 /*
  * Constructor de un nuevo nodo.
  */
-node::node(bool *_state, node *_parent, int _costo, int _action) :
-    state(_state), parent(_parent), cost(_costo), action(_action) {
-    h = find_disjoint_cliques_upto(g, state, N, MAX_GRADE);
+node::node(state& _state, node *_parent, int _costo, int _action) :
+    s(_state), parent(_parent), cost(_costo), action(_action) {
+    h = find_disjoint_cliques_upto(g, s, N, MAX_GRADE);
 }
 
 node::node() {
-    state = init();
+    s = init();
     cost = 0;
     parent = 0;
     action = -1;
-    h = find_disjoint_cliques_upto(g, state, N, MAX_GRADE);
+    h = find_disjoint_cliques_upto(g, s, N, MAX_GRADE);
 }
 
 /*
@@ -26,12 +25,20 @@ bool node::is_goal() {
     return (h == 0);
 }
 
+
+
+// bool operator<(const node& a, const node& b) {
+//     if (a.h + a.cost == b.h + b.cost) {
+//         return a.h < b.h;
+//     }
+//     return a.h + a.cost < b.h + b.cost;
+// }
+
 /*
  * Generar *un* sucesor
  */
-bool *generate_succ(bool *state, int nodo) {
-    bool *newState = new bool[N];
-    memcpy(newState, state, sizeof(bool)*N);
+state generate_succ(state& s1, int nodo) {
+    vector<bool> newState(s1);
     newState[nodo] = false;
     return newState;
 }
@@ -40,9 +47,8 @@ bool *generate_succ(bool *state, int nodo) {
  * Retorna el estado inicial del arbol de busqueda dado un grafo de
  * tamano n.
  */
-bool *init() {
-    bool *g = new bool[N];
-    memset(g, true, sizeof(bool)*N);
+state init() {
+    state g(N, true);
     return g;
 }
 
