@@ -1,7 +1,7 @@
 #ifndef __search_hpp__
 #define __search_hpp__
 #include <queue>
-#include <map>
+#include <unordered_map>
 #include "node.hpp"
 
 extern int W;
@@ -11,19 +11,20 @@ extern int W;
 struct CompareNode
 {
     bool operator()(const node &a, const node &b) {
-        // if (W*a.h + a.cost == W*b.h + b.cost) {
-        //     return a.h > b.h;
-        // }
+        if (W*a.h + a.cost == W*b.h + b.cost) {
+            return a.h > b.h;
+        }
         return W*a.h + a.cost > W*b.h + b.cost;
     }
 };
 
 typedef priority_queue<node, vector<node>, CompareNode> pqueue;
 
-bool is_better(node& n, map<bool*, int>& distances);
+bool is_better(node& n, unordered_map<bool*, int>& distances);
 pair<int, node> WIDAstar(int w);
 pair<int, node> IDAstar();
 pair<int, node> WAstar(int w);
 pair<int, node> Astar();
+pair<int, node> BnB();
 
 #endif

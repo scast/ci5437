@@ -11,6 +11,7 @@ using namespace std;
 graph g;
 int N;
 
+
 void print_with_indent(const char * string, int indent){
     printf("%*s" "%s", indent, " ", string);
 }
@@ -53,9 +54,9 @@ bool find_cliques_of_size(const graph& g, int n, unsigned int size, int *cliques
             cliques[*it] = i;
         }
         cliques[i] = -1;
-        // printf("Consegui el clique: ");
-        // print_set(R, 0);
-        // printf("\n");
+        printf("Consegui el clique: ");
+        print_set(R, 0);
+        printf("\n");
         return true;
     } else if (P.size() == 0 && X.size() ==0) {
         // Conseguimos un k-clique con k < size. Lo ignoraremos porque
@@ -115,6 +116,8 @@ int find_disjoint_cliques_upto(const graph& g, const vector<bool>& available,
             }
         }
     }
+    printf("----\n");
+    delete cliques;
     return h;
 }
 

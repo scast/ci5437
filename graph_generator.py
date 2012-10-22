@@ -1,14 +1,14 @@
 from collections import defaultdict
 import random
 
-V = 20
-EV = 3
+V = 10
+EV = 5
 G = defaultdict(list)
 
 for i in range(V):
     hijos = range(V)
     random.shuffle(hijos)
-    while len(G[i]) < 16 and hijos:
+    while len(G[i]) < EV and hijos:
         current = hijos.pop()
         if current not in G[i] and len(G[current]) < 16 and current != i:
             G[i].append(current)
