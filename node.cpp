@@ -41,8 +41,8 @@ bool node::is_goal() {
  * Generar *un* sucesor
  */
 state generate_succ(state& s1, int nodo) {
-    vector<bool> newState(s1);
-    newState[nodo] = false;
+    vector<char> newState(s1);
+    newState[nodo] = INCLUIDO;
     return newState;
 }
 
@@ -51,7 +51,7 @@ state generate_succ(state& s1, int nodo) {
  * tamano n.
  */
 state init() {
-    state g(N, true);
+    state g(N, EXCLUIDO);
     return g;
 }
 

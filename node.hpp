@@ -2,7 +2,11 @@
 #define __node_hpp__
 #include "clique.hpp"
 
-typedef vector<bool> state;
+#define INCLUIDO ('0')
+#define EXCLUIDO ('1')
+#define DEBE_INCLUIRSE ('3')
+
+typedef vector<char> state;
 
 struct node {
     state s; // cuanto del grafo queda

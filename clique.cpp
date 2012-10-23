@@ -54,9 +54,9 @@ bool find_cliques_of_size(const graph& g, int n, unsigned int size, int *cliques
             cliques[*it] = i;
         }
         cliques[i] = -1;
-        printf("Consegui el clique: ");
-        print_set(R, 0);
-        printf("\n");
+        // printf("Consegui el clique: ");
+        // print_set(R, 0);
+        // printf("\n");
         return true;
     } else if (P.size() == 0 && X.size() ==0) {
         // Conseguimos un k-clique con k < size. Lo ignoraremos porque
@@ -89,7 +89,7 @@ bool find_cliques_of_size(const graph& g, int n, unsigned int size, int *cliques
  * original, los nodos de ese grafo que aun no hemos quitado, y
  * calcula el valor de la heuristica.
  */
-int find_disjoint_cliques_upto(const graph& g, const vector<bool>& available,
+int find_disjoint_cliques_upto(const graph& g, const vector<char>& available,
                                int n, int grade) {
     int *cliques = new int[n];
     for (int i=0; i < n; i++) {
@@ -98,7 +98,7 @@ int find_disjoint_cliques_upto(const graph& g, const vector<bool>& available,
     set<int> x, initialP;
     int h = 0;
     for (int i=0; i < n; i++)
-        if (available[i])
+        if (available[i] == '1')
             initialP.insert(i);
 
     for (int i = grade; i > 1; i--) {
@@ -116,7 +116,7 @@ int find_disjoint_cliques_upto(const graph& g, const vector<bool>& available,
             }
         }
     }
-    printf("----\n");
+    // printf("----\n");
     delete cliques;
     return h;
 }

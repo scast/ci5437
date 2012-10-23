@@ -8,8 +8,8 @@
 // extern
 
 int main(int argc, char **argv) {
-    int m, v, u, w;
-    scanf("%d %d %d", &N, &m, &w);
+    int m, v, u;
+    scanf("%d %d", &N, &m);
     // printf("%d", N);
     g.resize(N, set<int>());
     g.clear();
@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
         g[v].insert(u);
         g[u].insert(v);
     }
-    pair<int, node> result_A_star = WAstar(w);
-    printf("Costo final: %d\n", result_A_star.first);
+    pair<int, node> result_A_star = BnB();
+    printf("Costo final -> %d\n", result_A_star.first);
     return 0;
 }
