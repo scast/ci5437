@@ -67,12 +67,19 @@ bool find_cliques_of_size(const graph& g, int n, unsigned int size, int *cliques
     for (set<int>::iterator it = P.begin(); it != P.end(); ) {
         // printf("brooo estoy pegao");
         int v = *it;
-        set<int> Rv(R), Pv, Xv;
+        set<int> Rv(R), Xv, Pv;
+        // vector<int> Pv1(N), Xv1(N);
         Rv.insert(v);
         set_intersection(g[v].begin(), g[v].end(), P.begin(), P.end(),
                          inserter(Pv, Pv.begin()));
         set_intersection(g[v].begin(), g[v].end(), X.begin(), X.end(),
                          inserter(Xv, Xv.begin()));
+        // set_intersection(g[v].begin(), g[v].end(), P.begin(), P.end(),
+        //                  Pv1.begin());
+        // set_intersection(g[v].begin(), g[v].end(), X.begin(), X.end(),
+        //                  Xv1.begin());
+        // set<int> Pv(Pv1.begin(), Pv1.end()), Xv(Xv1.begin(), Xv2.e
+                                                // );
         bool ret = find_cliques_of_size(g, n, size, cliques, Pv, Xv, Rv, i+2);
         if (ret)
             return true;
@@ -98,7 +105,7 @@ int find_disjoint_cliques_upto(const graph& g, const vector<char>& available,
     set<int> x, initialP;
     int h = 0;
     for (int i=0; i < n; i++)
-        if (available[i] == '1')
+        if (available[i] == '1' || available[i] == '3')
             initialP.insert(i);
 
     for (int i = grade; i > 1; i--) {

@@ -4,13 +4,11 @@
 #include<cstdio>
 #include<climits>
 #include<algorithm>
-#include<unordered_set>
-#include<unordered_map>
 int W = 1;
 // int exp = 0;
 
 bool mycomp(int i, int j) {
-    return g[i].size() < g[i].size();
+    return g[i].size() > g[j].size();
 }
 
 void print_state(state& st) {
@@ -93,19 +91,20 @@ void print_state(state& st) {
 int alpha = INT_MAX;
 int EXPN = 0;
 node best;
-int *order;
+int *order, *actionMap;
 
 void DFS_BnB(node& n, int p) {
     // printf("g(n) = %d\n", n.cost);
     // printf("h(n) = %d\n", n.h);
     // printf("f(n) = %d\n", n.h+n.cost);
     // printf("%d\n", n.cost);
-    if (EXPN % 100000 == 0) {
+    if (EXPN % 10000 == 0) {
         printf("Nodos expandidos -> %d\n", EXPN);
         printf("Profundidad actual -> %d\n", p);
+        print_state(n.s);
     }
     if (n.h+n.cost >= alpha) {
-        // printf("Podando, el mio -> alpha = %d\n", alpha);
+        // printf("Podando por peor costo\n");
         return;
     }
 
@@ -115,12 +114,18 @@ void DFS_BnB(node& n, int p) {
             printf("Profunfidad -> %d\n", p);
             alpha = n.cost;
             best = n;
+            print_state(best.s);
         }
+        return;
     }
     // printf("En un nodo de h(n) = %d\n", n.h);
     if (n.action + 1 != N) {
         state succ ;
-        succ = generate_succ(n.s, n.action+1);
+        int next = n.action + 1;
+        // printf("NEXT -> %d\n", next);
+        succ = generate_succ(n.s, next);
+        // printf("GENERADO\n");
+        // print_state(succ);
         node newNode(succ, &n, n.cost+1, n.action+1);
         EXPN++;
         DFS_BnB(newNode, p+1);
@@ -136,23 +141,33 @@ void DFS_BnB(node& n, int p) {
          */
 
         // Chequeamos si necesariamente habia que agregar este nodo.
-        if (n.s[n.action+1] == DEBE_INCLUIRSE) {
-            printf("Podando por DEBE_INCLUIRSE\n");
+        if (n.s[next] == DEBE_INCLUIRSE) {
+            // printf("Podando por DEBE_INCLUIRSE %d\n", n.action+1);
             return; // Se debe incluir pero decidimos no hacerlo.
         }
 
         // Chequeamos los nodos adyacentes y revisamos podas.
-        set<int>::iterator cend = g[n.action+1].end();
-        for (set<int>::iterator it = g[n.action+1].begin(); it != cend; ++it) {
-            if (*it < n.action+1 && n.s[*it] == EXCLUIDO) {
-                printf("Podando por EXCLUIDO\n");
+        // printf("Sucesores de %d -> ", n.action+1);
+        // printf("profundidad -> %d\n", p);
+        // print_state(n.s);
+        set<int>::iterator cend = g[next].end();
+        // printf("HOLA\n");
+        for (set<int>::iterator it = g[next].begin(); it != cend; ++it) {
+            // if (n.s[*it] == EXCLUIDO)
+            //     printf("%d %d %c\n", actionMap[*it], actionMap[next], n.s[*it]);
+            if (*it < next && n.s[*it] == EXCLUIDO) {
+                // printf("Podando por EXCLUIDO\n");
                 return; // Se debe incluir pero ya decidimos en el
                         // árbol no incluirlo!
             }
-
-            n.s[*it] = DEBE_INCLUIRSE;
+            // printf("%d, ", *it);
+            if (n.s[*it] != INCLUIDO)
+                n.s[*it] = DEBE_INCLUIRSE;
 
         }
+        // printf("estado nuevo -> ");
+        // print_state(n.s);
+        // printf("\n");
         n.action++;
         EXPN++;
         DFS_BnB(n, p+1); // exp+=2;
@@ -166,10 +181,16 @@ pair<int, node> BnB(){
     printf("h(n) = %d\n", initial.h);
     // printf("f(n) = %d\n", n.h+n.cost);
     // printf("%d\n", n.cost);
-    order = new int[N];
-    for (int i = 0; i<N; i++)
-        order[i] = i;
-    sort(order, order+N, mycomp);
+    // order = new int[N];
+    // actionMap = new int[N];
+    // for (int i = 0; i<N; i++)
+    //     order[i] = i;
+    // sort(order, order+N, mycomp);
+    // for (int i=0; i < N; i++) {
+    //     printf("Vertice %d tiene %ld lados\n", order[i], g[order[i]].size());
+    //     actionMap[order[i]] = i;
+    // }
+
 
     DFS_BnB(initial, 0);
     print_state(best.s);
