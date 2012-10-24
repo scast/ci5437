@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
         g[v].insert(u);
         g[u].insert(v);
     }
-    pair<int, node> result_A_star = BnB();
-    printf("Costo final -> %d\n", result_A_star.first);
+    pair<int, node> result = BnB();
+    printf("Costo final -> %d\n", result.first);
     return 0;
 }

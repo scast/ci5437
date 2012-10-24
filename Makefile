@@ -1,4 +1,4 @@
-CFLAGS=-Wall -g -O2 -std=c++11 -pg
+CFLAGS=-Wall -g -O2 -DSTATIC
 CC=g++
 
 vertex_cover: vertex_cover.o search.o node.o clique.o

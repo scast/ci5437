@@ -78,9 +78,6 @@ bool find_cliques_of_size(const graph& g, int n, unsigned int size, int *cliques
  */
 int find_disjoint_cliques_upto(const graph& g, const vector<char>& available,
                                int n, int grade) {
-    printf("-------------------------------");
-    printf("CALCULANDO HEURISTICA\n");
-    printf("-------------------------------");
     cliques = new int[n];
     for (int i=0; i < n; i++) {
         cliques[i] = i;
