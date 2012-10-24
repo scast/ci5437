@@ -8,6 +8,8 @@ typedef vector<set<int> > graph;
 #define MAX_GRADE (4)
 extern graph g;
 extern int N;
+extern int *cliques;
+
 
 bool find_cliques_of_size(const graph& g, int n, unsigned int size, int *cliques,
                           set<int> P, set<int> X, const set<int>& R = set<int>(),
