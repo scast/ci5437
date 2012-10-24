@@ -6,15 +6,17 @@
 #define EXCLUIDO ('1')
 #define DEBE_INCLUIRSE ('3')
 
+// Usamos char por eficiencia.
 typedef vector<char> state;
 
 struct node {
     state s; // cuanto del grafo queda
-    node *parent; // padre de este nodo en el arbol de busqueda
+    const node *parent; // padre de este nodo en el arbol de busqueda
     int cost; // costo del nodo hasta aca
     int action; // cual nodo agregue cuando llegue a este nodo
     int h;
     node(state& _state, node *_parent, int _costo, int _action);
+    node(const node& n);
     node();
     bool is_goal();
 };
