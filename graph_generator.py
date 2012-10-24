@@ -1,8 +1,8 @@
 from collections import defaultdict
 import random
 
-V = 60
-EV = 8
+V = 150
+EV = 16
 G = defaultdict(list)
 
 for i in range(V):
